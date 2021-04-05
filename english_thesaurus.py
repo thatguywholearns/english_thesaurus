@@ -18,6 +18,10 @@ def return_definition(thesaurus_dict: dict, word: str) -> str:
         user_feedback = input("[Y/N]\n")
         if user_feedback == "Y":
             return thesaurus_dict[closest_word]
+        elif user_feedback == "N":
+            "The word doesn't exist"
+        else:
+            "Can't recognize input"
     else:
         print("Couldn't find this word in the dictionary. Check if word exists")
         return "Definition not found"
