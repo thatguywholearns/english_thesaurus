@@ -2,16 +2,18 @@ import json
 from difflib import get_close_matches
 
 # Functions
-def return_definition(thesaurus_dict: dict, word: str) -> str:
+def return_definition(thesaurus_dict: dict, word: str) -> list:
     """
     thesaurus_dict:     Dictionary containing words and their definition
     word:               Word you want to look up a definition for
-    returns:            Definition of the word you provided
+    returns:            List that contains definition(s) of the word you provided
     """
     # Clean input
     word_clean = word.strip().lower()
     if word_clean in thesaurus_dict:
         return thesaurus_dict[word_clean]
+    if word_clean.title() in thesaurus_dict:
+        return thesaurus_dict[word_clean.title()]
     elif len(get_close_matches(word=word_clean, possibilities=thesaurus_dict, cutoff=0.5)) > 0:
         closest_word = get_close_matches(word=word_clean, possibilities=thesaurus_dict, cutoff=0.5)[0]
         print(f"Did you mean {closest_word}")
@@ -19,11 +21,10 @@ def return_definition(thesaurus_dict: dict, word: str) -> str:
         if user_feedback == "Y":
             return thesaurus_dict[closest_word]
         elif user_feedback == "N":
-            "The word doesn't exist"
+            return "The word doesn't exist"
         else:
             "Can't recognize input"
     else:
-        print("Couldn't find this word in the dictionary. Check if word exists")
         return "Definition not found"
 
 
